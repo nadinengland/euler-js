@@ -1,6 +1,7 @@
 var problems = [null]
   , sugar = require('sugar')
-  , helper = require('./helper.js');
+  , helper = require('./helper.js')
+  , BigInt = require('bigint');
 
 problems[1] = {
   description: "Find the sum of all the multiples of 3 or 5 below 1000.",
@@ -29,35 +30,101 @@ problems[6] = {
   }())
 };
 
+problems[10] = {
+  description: "Find the sum of all the primes below million.",
+  answer: (function () {
+    function sieve(max) {
+      var D = []
+        , primes = [];
+
+      (1).upto(max).each(function (q) {
+        if (D[q] !== undefined) {
+          D.each(function (i) {
+            var p = D[]
+          });
+        }
+      })     
+    };
+
+    return sieve(1000000);
+  }())
+}
+
+problems[16] = {
+  description: "What is the sum of the digits of the number 2^1000?",
+  answer: (function () {
+    return BigInt(2).pow(1000).toString().chars().sum(function (n) {
+      return n.toNumber();
+    });
+  }())
+}
+
+problems[17] = {
+  description: "If all the numbers from 1 to 1000 (one thousand) inclusive were written out in words, how many letters would be used?",
+  answer: (function () {
+    var units = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine']
+      , teens = ['eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen']
+      , tens = ['ten', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety']
+      , hundred = 'hundred'
+      , thousand = 'thousand'
+      , and = 'and';
+
+
+    return "unsolved";
+    /*return (1).upto(1000).map(function (n) {
+      var counter = 0
+        , sentence = "";
+
+      n.toString().reverse().chars(function (ch) {
+        switch (counter) {
+          case 0:
+            senetence += units[n];
+            break;
+          case 1:
+
+          case 2:
+          case 3:
+            sentence += units[ch] + thousand;
+            break;
+        }
+
+        counter += 1;
+      });
+    });*/
+  }())
+}
+
 problems[20] = {
   description: "Find the sum of the digits in the number 100!",
   answer: (function () {
-    function factorial(n) {
-      var i, value = 1;
-      
-      for (i = 2; i <= n; i += 1) {
-        value *= i;
-      }
+    var value = BigInt(1);
 
-      return value;
-    };
+    (1).upto(100).forEach(function (n) {
+      value = value.mul(n);
+    });
 
-    return factorial(100).toString().split().sum();
+    return value.toString().chars().sum(function (n) {
+      return n.toNumber();
+    });
+
+    // If JS didn't use 64bit precision
+    // return (1).upto(100).reduce(function (a, b) {
+    //   return a * b;
+    // }).toFixed().toString().split().sum(function (n) {
+    //  return n.toNumber();
+    // });
   }())
 }
 
 
+// Display solutions
 problems.forEach(function (problem) {
-  var answer, formatted;
-
   if (problem === null) return;
 
-  answer = problem.answer.toExponential();
-  formatted = answer.format();
-
   console.log(
-    problems.indexOf(problem) + ": " +
-    formatted + " (" + answer +
-    ") -> " + problem.description
+    problems.indexOf(problem) + ": " + problem.answer + " -> " + problem.description
   );
 });
+
+
+
